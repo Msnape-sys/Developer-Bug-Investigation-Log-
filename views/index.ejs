@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Developer Bug Investigation Log</h1>
+<section class = "summary-container">
+        <section class= "summary-card">
+            <p>Total Bugs:</p>
+            <h2><%= info.length %></h2>
+        </section>
+        <section class = "summary-card">
+            <p>In Progress:</p>
+            <h2><%= info.filter(bug => bug.status !== 'Resolved').length %></h2>
+        </section>
+         <section class = "summary-card">
+            <p>Resolved:</p>
+            <h2><%= info.filter(bug => bug.status === 'Resolved').length %></h2>
+        </section>
+</section>
+ 
+<ul>
+    <% for(let i=0; i < info.length; i++) {%>
+        <section class = "bug-container" data-id = "<%= info[i]._id%>">
+        <li class="bug">
+            <span>Bug Title: </span><span><%= info[i].title %></span> 
+            <span>Error Message: </span><span><%= info[i].errorMessage %></span>
+            <span>Description: </span><span id ="bug-status"><%= info[i].description %></span>
+            <span>Progress Status:</span>
+            <select name="status-update" id ="status-update">
+            <option value = "Investigating" 
+            <%= info[i].status === 'Investigating' ? 'selected': ''%> >Investigating</option>
+            <option value = "Fixing"
+            <%= info[i].status === 'Fixing' ? 'selected': ''%>>Fixing</option>
+            <option value = "Resolved"
+            <%= info[i].status === 'Resolved' ? 'selected': ''%>>Resolved</option>
+        </select>
+            <span>Solution: </span><textarea id ="bug-notes"><%= info[i].solution %></textarea>
+            <button id = "update-button">Update</button>
+            <i class='fas fa-trash'></i>
+        </li> 
+        </section>
+    <% } %>
+    </ul>
+
+    <h2>Add New Bug:</h2>
+
+    <form action="/addBug" method="POST">
+        <input type="text" placeholder="Bug Title" name="title">
+        <input type="text" placeholder="Error Messagee" name="errorMessage">
+        <input type="text" placeholder="Description" name="description">
+        <select name="status" id = "selectedStatus">
+            <option value = "Investigating">Investigating</option>
+            <option value = "Fixing">Fixing</option>
+            <option value = "Resolved">Resolved</option>
+        </select>
+          <input type="text" placeholder="Solution" name="solution">
+        <input type="submit">
+    </form>
+    
+
+    <script src='js/main.js'></script>
+</body>
+</html>
